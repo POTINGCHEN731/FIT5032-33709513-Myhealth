@@ -2,7 +2,6 @@
 
 <template>
   <header>
-    <BHeader />
   </header>
 
   <main>

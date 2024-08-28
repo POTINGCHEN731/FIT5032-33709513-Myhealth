@@ -1,0 +1,14 @@
+{
+    "icons": [
+      {
+        "name": "Facebook",
+        "image_path": "src/components/icons/facebook.png",
+        "alt_text": "Facebook Icon"
+      },
+      {
+        "name": "Google",
+        "image_path": "src/components/icons/google.png",
+        "alt_text": "Google Icon"
+      }
+    ]
+  }
