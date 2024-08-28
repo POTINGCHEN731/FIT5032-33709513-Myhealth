@@ -178,16 +178,18 @@ watch(
 </Script>
 
 <template>
-  <div class="container mt-5">
-    <div class="row">
+  <div class="container mt-5 breakpoint-table">
+    <div class="row mb-3">
       <div class="col-md-8 offset-md-2">
+        <div class="row mb-3">
         <h1 class="text-center">Register</h1>
         <p class="text-center">
           Welcome to become our member please finish the form.
         </p>
+        </div>
         <form @submit.prevent="submitForm">
           <div class="row mb-3">
-            <div class="col-md-7 col-sm-5">
+            <div class="col-md-7 col-sm-7">
               <label for="userEmail" class="form-label">Email</label>
               <input
                 type="text"
@@ -200,7 +202,7 @@ watch(
               <div v-if="errors.userEmail" class="text-danger">{{ errors.userEmail }}</div>
             </div>
             <div class="row mb-3 mt-2">
-            <div class="col-md-4 col-sm-5">
+            <div class="col-md-4 col-sm-4">
               <label for="password" class="form-label">Password</label>
               <input
                 type="password"
@@ -212,7 +214,7 @@ watch(
               />
               <div v-if="errors.password" class="text-danger">{{ errors.password }}</div>
               </div>
-            <div class="col-md-4 col-sm-5">
+            <div class="col-md-4 col-sm-4">
               <label for="password" class="form-label">Confirm password</label>
               <input
                 type="password"
@@ -234,7 +236,7 @@ watch(
             <hr class="flex-grow-1" />
           </div>
             </div>
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-sm-4">
               <label for="username" class="form-label">Username</label>
               <input
                 type="text"
@@ -247,7 +249,7 @@ watch(
               <div v-if="errors.username" class="text-danger">{{ errors.username }}</div>
             </div>
 
-            <div class="col-md-4 col-sm-6">
+            <div class="col-md-4 col-sm-4">
               <label for="gender" class="form-label">Gender</label>
               <select class="form-select" id="gender" @blur="() => validateGender(true)"
                 @change="() => validateGender(false)" v-model="formData.gender">
@@ -262,7 +264,7 @@ watch(
           <!-- Birthday Section -->
           <div class="row mb-3">
 
-            <div class="col-md-4 col-sm-5">
+            <div class="col-md-4 col-sm-4">
               <label for="PhoneNumber" class="form-label">Phone Number</label>
               <input
                 type="text"
@@ -277,9 +279,9 @@ watch(
               </div>  
             </div>
 
-            <div class="col-md-8 col-sm-7">
+            <div class="col-md-8 col-sm-8">
               <div class="row">
-                <div class="col-md-2 col-sm-4">
+                <div class="col-md-4 col-sm-4">
                   <label for="birthYear" class="form-label">Year</label>
                   <input
                     type="text"
@@ -291,7 +293,7 @@ watch(
                   />
                   <div v-if="errors.birthYear" class="text-danger">{{ errors.birthYear }}</div>
                 </div>
-                <div class="col-md-2 col-sm-4">
+                <div class="col-md-2 col-sm-2">
                   <label for="birthMonth" class="form-label">Month</label>
                   <select class="form-select" @blur="() => validateMonth(true)"
                     @change="() => validateMonth(false)" v-model="formData.birthMonth">
@@ -300,7 +302,7 @@ watch(
                   </select>
                   <div v-if="errors.birthMonth" class="text-danger">{{ errors.birthMonth }}</div>  
                 </div>
-                <div class="col-md-2 col-sm-4">
+                <div class="col-md-2 col-sm-2">
                   <label for="birthDay" class="form-label">Day</label>
                   <select class="form-select" @blur="() => validateDay(true)"
                     @change="() => validateDay(false)" v-model="formData.birthDay">
@@ -348,6 +350,8 @@ watch(
   text-align: center;
   margin-top: 50px;
 }
+
+
 
 
 </style>

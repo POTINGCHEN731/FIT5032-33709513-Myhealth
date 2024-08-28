@@ -60,7 +60,8 @@ const formData = ref({
                 <button type="submit" class="btn btn-primary me-5 "  style="width: 100%;">Login</button>
               </div>
               <div class="mt-4 col-md-12 col-sm-12">
-                <a href="#" class="text-decoration-none">No account? Sign up</a>
+                <router-link to="/SignUp" class="nav-link" active-class="active" aria-current="page"
+            >No account? Sign Up</router-link>
                 </div>
             </div>
           </div>
