@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import { isAuthenticated } from '../router/index.js';
 import { useRouter } from 'vue-router'
-import icons from '../assets/icons.json' // Importing icons from JSON file
+import icons from '../assets/icons.json' 
 
 const formData = ref({
   username: '',
@@ -13,7 +13,7 @@ const formData = ref({
  if (formData.value.username == 'user' && formData.value.password == 'password') {
     alert('Login successful')
   isAuthenticated.value = true
-  router.push('/about')
+  router.push('/')
 }
     else{
       alert('Login failed')
@@ -25,7 +25,7 @@ const formData = ref({
 <template>
   <div class="background">
     <div class='row'></div>
-  <div class="container ">
+  <div class="container login-box">
     <div class="row">
       <div class="col-md-8 col-sm-8 offset-md-2">
         <h1 class="text-center font-change"> <img src="../components/icons/logo.jpg" style="width: 90%; height: auto; margin-left:-10%"></h1>
@@ -92,21 +92,24 @@ const formData = ref({
 
 <style scoped>
 .background {
-  margin-top: 0rem;
- height: 100vh;
-  padding: 5;
-    background-color: pink; 
+  background-color: #E0F0E9; 
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .container {
-  background-color: white;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  max-width: 30%;
-  height: 90vh;
-  margin: 0 auto;
-  margin-top: 3rem;
-  margin-bottom: 4rem;
-  padding: 10px;
+  width: 100%;
+  max-width: 40%;
+  max-height: 50%;
+  padding: 20px;
+}
+
+.login-box {
+  background-color: #FFFFFF;
   border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 /* Class selectors */
@@ -115,27 +118,45 @@ const formData = ref({
   margin-top: 50px;
 }
 
-
 .list-group-item {
   padding: 6px;
 }
+
 .custom-col {
     width: 12%; 
 }
+
 .responsive-icon {
-    width: 70%; 
+    width: 1.5em;
+    height: 1.5em;
     max-width: 40px; 
     height: auto; 
 }
+
 .scalable-text {
     font-size: 1rem; 
 }
 
+.login-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #B8D8E8; 
+  color: #4A4A4A;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-btn:hover {
+  background-color: #A0C8D8; 
+}
 
 
 @media (max-width: 768px) {
   .container {
-    max-width: 50%;
+    max-width: 90%;
     font-size: 0.5rem;
     .responsive-icon {
     width: 50%; 
@@ -176,7 +197,7 @@ input[type="password"] {
 @media (max-width: 576px) {
 
   .container {
-    max-width: 80%;
+    max-width: 95%;
     font-size: 0.5rem;
     .responsive-icon {
     width: 50%; 

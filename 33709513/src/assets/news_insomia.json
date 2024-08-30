@@ -1,0 +1,28 @@
+{
+  "newsItems": [
+    {
+      "title": "New Study Links Insomnia to Heart Disease",
+      "summary": "Researchers have found a strong correlation between chronic insomnia and increased risk of heart disease.",
+      "image": "src/components/icons/insomia_1.jpg",
+      "link": "#",
+      "date": "2023-05-15",
+      "rating": 4.5
+    },
+    {
+      "title": "Natural Remedies for Better Sleep",
+      "summary": "Experts suggest various natural methods to improve sleep quality, including herbal teas and meditation.",
+      "image": "src/components/icons/insomia_2.jpg",
+      "link": "#",
+      "date": "2023-05-10",
+      "rating": 4.8
+    },
+    {
+      "title": "The Impact of Technology on Sleep Patterns",
+      "summary": "A recent study explores how the use of electronic devices before bedtime affects sleep quality.",
+      "image": "src/components/icons/insomia_3.jpg",
+      "link": "#",
+      "date": "2023-05-05",
+      "rating": 4.2
+    }
+  ]
+}

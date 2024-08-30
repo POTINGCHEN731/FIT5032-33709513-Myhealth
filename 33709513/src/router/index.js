@@ -3,6 +3,8 @@ import HomeView from '../views/HomeView.vue'
 import LoginView from '../views/LoginView.vue'
 import {ref} from 'vue'
 import SignUpView from '@/views/SignUpView.vue'
+import InsomiaView from '@/views/InsomiaView.vue'
+import ContactView from '@/views/ContactView.vue'
 const isAuthenticated = ref(false)
 const routes = [
   {
@@ -11,7 +13,7 @@ const routes = [
     component: HomeView
   },
   {
-    path: '/login',
+    path: '/Login',
     name: 'Login',
     component: LoginView
   },
@@ -19,6 +21,16 @@ const routes = [
     path: '/SignUp',
     name: 'SignUp',
     component: SignUpView
+  },
+  {
+    path: '/InsomiaView',
+    name: 'InsomiaView',
+    component: InsomiaView
+  },
+  {
+    path: '/Contact',
+    name: 'Contact',
+    component: ContactView
   }
 ]
 
