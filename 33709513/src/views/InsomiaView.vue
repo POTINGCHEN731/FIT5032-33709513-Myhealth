@@ -1,28 +1,22 @@
 <script setup>
-import { ref, computed } from 'vue';
-import StarRating from 'vue-star-rating';
-import newsData from '../assets/news_insomia.json';
-import MenuBar from '../components/MenuBar.vue';
-const newsItems = ref(newsData.newsItems);
+import { ref, computed } from 'vue'
+import StarRating from 'vue-star-rating'
+import newsData from '../assets/news_insomia.json'
+import MenuBar from '../components/MenuBar.vue'
+const newsItems = ref(newsData.newsItems)
 
 
-
-const averageScore = computed(() => {
-  const validRatings = newsItems.value.filter(item => item.rating > 0);
-  if (validRatings.length === 0) return 0;
-  const sum = validRatings.reduce((acc, item) => acc + item.rating, 0);
-  return sum / validRatings.length;
-});
 
 const insomniaInfo = {
-  title: "What is Insomnia",
-  description: "Insomnia is a common sleep disorder characterized by difficulty falling asleep, staying asleep, or both. It can lead to daytime fatigue, mood disturbances, and decreased performance in work or daily activities. Chronic insomnia can have significant impacts on overall health and quality of life.",
-  image: "src/components/icons/Insomia.jpg"
-};
+  title: 'What is Insomnia',
+  description:
+    'Insomnia is a common sleep disorder characterized by difficulty falling asleep, staying asleep, or both. It can lead to daytime fatigue, mood disturbances, and decreased performance in work or daily activities. Chronic insomnia can have significant impacts on overall health and quality of life.',
+  image: 'src/components/icons/Insomia.jpg'
+}
 </script>
 
 <template>
-  <MenuBar /> 
+  <MenuBar />
   <div class="insomnia-view">
     <div class="background-image" :style="{ backgroundImage: `url(${insomniaInfo.image})` }"></div>
     <div class="overlay"></div>
@@ -53,25 +47,31 @@ const insomniaInfo = {
               <div class="card card-news">
                 <div class="row g-0 h-100">
                   <div class="col-md-4">
-                    <img :src="news.image" class="img-fluid rounded-start h-100 object-fit-cover" :alt="news.title">
+                    <img
+                      :src="news.image"
+                      class="img-fluid rounded-start h-100 object-fit-cover"
+                      :alt="news.title"
+                    />
                   </div>
                   <div class="col-md-8 d-flex flex-column">
                     <div class="card-body flex-grow-1">
                       <h5 class="card-title">{{ news.title }}</h5>
                       <p class="card-text">{{ news.summary }}</p>
-                      <StarRating 
+                      <StarRating
                         v-model="news.rating"
-                        increment="0.5" 
+                        increment="0.5"
                         :star-size="20"
                         active-color="#007bff"
                         inactive-color="#b0c4de"
                       ></StarRating>
                     </div>
-                    <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-center">
+                    <div
+                      class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-center"
+                    >
                       <button class="btn btn-primary btn-sm">submit</button>
-                      <div class="average-score">
+                      <!-- <div class="average-score">
                         average-score: <span class="fw-bold">{{ averageScore.toFixed(1) }}</span>
-                      </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
@@ -99,7 +99,6 @@ const insomniaInfo = {
   height: 100%;
   background-size: cover;
   background-position: center;
-  background-attachment: fixed;
   z-index: -2;
 }
 
@@ -122,17 +121,9 @@ const insomniaInfo = {
   padding: 30px;
 }
 
-.insomnia-overview, .card {
-  background-color: #f8f9fa; 
+.card {
+  background-color: #f8f9fa;
   border: none;
-}
-
-.card-title {
-  color: #333;
-}
-
-.card-text {
-  color: #555;
 }
 
 .card-news {
@@ -145,7 +136,7 @@ const insomniaInfo = {
 }
 
 .card-footer {
-  padding: 1.9rem 1rem;
+  padding: 1.5rem 1rem;
 }
 
 .average-score {
@@ -157,12 +148,12 @@ const insomniaInfo = {
   .card-news {
     height: auto;
   }
-  
+
   .card-footer {
     flex-direction: column;
-    align-items: flex-start !important;
+    align-items: flex-start;
   }
-  
+
   .average-score {
     margin-top: 0.5rem;
   }

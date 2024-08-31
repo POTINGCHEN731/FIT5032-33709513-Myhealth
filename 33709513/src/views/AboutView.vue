@@ -1,4 +1,8 @@
+<script setup>
+import MenuBar from '../components/MenuBar.vue';
+</script>
 <template>
+  <MenuBar />
   <div class="about">
     <h1>This is an about page</h1>
   </div>

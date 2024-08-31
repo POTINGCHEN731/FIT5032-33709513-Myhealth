@@ -1,8 +1,8 @@
 <script setup>
-import { ref,watch, onMounted } from 'vue'
-import { useRouter } from 'vue-router';
+import { ref, watch, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
-const router = useRouter();
+const router = useRouter()
 
 const months = Array.from({ length: 12 }, (_, i) => i + 1)
 const days = ref([])
@@ -14,12 +14,12 @@ const formData = ref({
   username: '',
   password: '',
   confirmPassword: '',
-  phoneNumber: '', 
+  phoneNumber: '',
   gender: '',
   birthYear: '',
   birthMonth: '',
   birthDay: '',
-  isAustralian: false,
+  isAustralian: false
 })
 
 onMounted(() => {
@@ -36,7 +36,7 @@ const updateDays = () => {
     maxDays = 30
   } else if (month === 2) {
     if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
-      maxDays = 29 
+      maxDays = 29
     } else {
       maxDays = 28
     }
@@ -49,8 +49,24 @@ const updateDays = () => {
   }
 }
 
-
 const submitForm = () => {
+  let users = JSON.parse(localStorage.getItem('users') || '[]')
+
+  const userEmailExists = users.some((user) => user.userEmail === formData.value.userEmail)
+  const usernameExists = users.some((user) => user.username === formData.value.username)
+
+  if (userEmailExists) {
+    alert('User email already exists')
+    clearForm()
+    return
+  }
+
+  if (usernameExists) {
+    alert('Username already exists')
+    clearForm()
+    return
+  }
+
   validateName(true)
   validatePassword(true)
   validateEmail(true)
@@ -60,11 +76,36 @@ const submitForm = () => {
   validateConfirmPassword(true)
   validateDay(true)
   validateMonth(true)
-  if (!errors.value.username && !errors.value.password && !errors.value.userEmail && !errors.value.phoneNumber && !errors.value.birthYear && !errors.value.gender && !errors.value.birthMonth && !errors.value.birthDay && !errors.value.confirmPassword) {
-    alert('Sign up successfully')
-    clearForm()
-    router.push('/Login')
-  }else{
+
+  const hasErrors = Object.values(errors.value).some((error) => error !== null)
+
+  if (!hasErrors) {
+    const newUser = {
+      userEmail: formData.value.userEmail,
+      username: formData.value.username,
+      password: formData.value.password,
+      phoneNumber: formData.value.phoneNumber,
+      gender: formData.value.gender,
+      birthYear: formData.value.birthYear,
+      birthMonth: formData.value.birthMonth,
+      birthDay: formData.value.birthDay,
+      isAustralian: formData.value.isAustralian
+    }
+
+    users.push(newUser)
+
+    try {
+      localStorage.setItem('users', JSON.stringify(users))
+      console.log('User registered successfully:', newUser)
+      alert('Sign up successfully')
+      clearForm()
+      router.push('/Login')
+    } catch (error) {
+      console.error('Error saving to localStorage:', error)
+      alert('An error occurred while registering. Please try again.')
+    }
+  } else {
+    console.log('Form has errors:', errors.value)
     alert('Please fill in all the required fields correctly.')
   }
 }
@@ -73,29 +114,32 @@ const clearForm = () => {
   formData.value = {
     userEmail: '',
     username: '',
-    phoneNumber: '',
     password: '',
     confirmPassword: '',
+    phoneNumber: '',
     gender: '',
     birthYear: '',
-  birthMonth: '',
-  birthDay: '',
-    isAustralian: false,
+    birthMonth: '',
+    birthDay: '',
+    isAustralian: false
   }
+  Object.keys(errors.value).forEach((key) => {
+    errors.value[key] = null
+  })
 }
 
 const errors = ref({
   userEmail: null,
   username: null,
-  phoneNumber: null,
   password: null,
-  confirmPassword: '',
+  confirmPassword: null,
+  phoneNumber: null,
   gender: null,
   birthYear: null,
   birthMonth: null,
-  birthDay: null,
-  isAustralian: false,
+  birthDay: null
 })
+
 const validateYear = (blur) => {
   const year = parseInt(formData.value.birthYear, 10)
   if (!year || year < 1900 || year > currentYear) {
@@ -104,14 +148,16 @@ const validateYear = (blur) => {
     errors.value.birthYear = null
   }
 }
+
 const validateEmail = (blur) => {
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   if (!emailPattern.test(formData.value.userEmail)) {
-    if (blur) errors.value.userEmail = 'Invalid email format';
+    if (blur) errors.value.userEmail = 'Invalid email format'
   } else {
-    errors.value.userEmail = null;
+    errors.value.userEmail = null
   }
 }
+
 const validateGender = (blur) => {
   if (!formData.value.gender) {
     if (blur) errors.value.gender = 'Must select a gender type'
@@ -119,12 +165,13 @@ const validateGender = (blur) => {
     errors.value.gender = null
   }
 }
+
 const validatePhoneNumber = (blur) => {
-  const phonePattern = /^[0-9]{10,15}$/; 
+  const phonePattern = /^[0-9]{10,15}$/
   if (!phonePattern.test(formData.value.phoneNumber)) {
-    if (blur) errors.value.phoneNumber = 'Invalid phone number format';
+    if (blur) errors.value.phoneNumber = 'Invalid phone number format'
   } else {
-    errors.value.phoneNumber = null;
+    errors.value.phoneNumber = null
   }
 }
 
@@ -158,6 +205,7 @@ const validatePassword = (blur) => {
     errors.value.password = null
   }
 }
+
 const validateConfirmPassword = (blur) => {
   if (formData.value.password !== formData.value.confirmPassword) {
     if (blur) errors.value.confirmPassword = 'Passwords do not match.'
@@ -165,34 +213,33 @@ const validateConfirmPassword = (blur) => {
     errors.value.confirmPassword = null
   }
 }
+
 const validateMonth = (blur) => {
   if (!formData.value.birthMonth) {
-    if (blur) errors.value.birthMonth = 'Month cannot be empty';
+    if (blur) errors.value.birthMonth = 'Month cannot be empty'
   } else {
-    errors.value.birthMonth = null;
+    errors.value.birthMonth = null
   }
 }
+
 const validateDay = (blur) => {
   if (!formData.value.birthDay) {
-    if (blur) errors.value.birthDay = 'Day cannot be empty';
+    if (blur) errors.value.birthDay = 'Day cannot be empty'
   } else {
-    errors.value.birthDay = null;
+    errors.value.birthDay = null
   }
 }
-watch(
-  [() => formData.value.birthYear, () => formData.value.birthMonth],
-  ([newYear, newMonth]) => {
-    updateDays(true);
-  }
-);
 
-</Script>
+watch([() => formData.value.birthYear, () => formData.value.birthMonth], ([newYear, newMonth]) => {
+  updateDays(true)
+})
+</script>
 
 <template>
   <div class="background">
     <div class="container">
       <div class="signup-box">
-        <img src="../components/icons/logo.jpg" alt="Logo" class="logo">
+        <img src="../components/icons/logo.jpg" alt="Logo" class="logo" />
         <h2 class="welcome-text">Create New Account</h2>
         <form @submit.prevent="submitForm">
           <div class="input-group">
@@ -242,7 +289,9 @@ watch(
               placeholder="Confirm your password"
             />
           </div>
-          <div v-if="errors.confirmPassword" class="error-message">{{ errors.confirmPassword }}</div>
+          <div v-if="errors.confirmPassword" class="error-message">
+            {{ errors.confirmPassword }}
+          </div>
           <div class="input-group">
             <label for="phoneNumber" class="label">Phone Number</label>
             <input
@@ -254,10 +303,15 @@ watch(
               placeholder="Enter your phone number"
             />
           </div>
-          <div v-if="errors.phoneNumber" class="error-message ">{{ errors.phoneNumber }}</div>
+          <div v-if="errors.phoneNumber" class="error-message">{{ errors.phoneNumber }}</div>
           <div class="input-group">
             <label for="gender" class="label">Gender</label>
-            <select id="gender" v-model="formData.gender" @blur="validateGender(true)" @input="validateGender(false)">
+            <select
+              id="gender"
+              v-model="formData.gender"
+              @blur="validateGender(true)"
+              @input="validateGender(false)"
+            >
               <option value="">Select gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
@@ -268,15 +322,27 @@ watch(
           <div class="input-group">
             <label class="label">Date of Birth:&nbsp;</label>
             <div class="date-inputs date-inputs-mobile">
-              <select v-model="formData.birthYear" @blur="validateYear(true)" @input="validateYear(false)">
+              <select
+                v-model="formData.birthYear"
+                @blur="validateYear(true)"
+                @input="validateYear(false)"
+              >
                 <option value="">Year</option>
                 <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
               </select>
-              <select v-model="formData.birthMonth" @blur="validateMonth(true)" @input="validateMonth(false)">
+              <select
+                v-model="formData.birthMonth"
+                @blur="validateMonth(true)"
+                @input="validateMonth(false)"
+              >
                 <option value="">Month</option>
                 <option v-for="month in months" :key="month" :value="month">{{ month }}</option>
               </select>
-              <select v-model="formData.birthDay" @blur="validateDay(true)" @input="validateDay(false)">
+              <select
+                v-model="formData.birthDay"
+                @blur="validateDay(true)"
+                @input="validateDay(false)"
+              >
                 <option value="">Day</option>
                 <option v-for="day in days" :key="day" :value="day">{{ day }}</option>
               </select>
@@ -284,11 +350,7 @@ watch(
           </div>
           <div v-if="errors.birthYear" class="error-message">{{ errors.birthYear }}</div>
           <div class="input-group checkbox">
-            <input
-              type="checkbox"
-              id="isAustralian"
-              v-model="formData.isAustralian"
-            />
+            <input type="checkbox" id="isAustralian" v-model="formData.isAustralian" />
             <label for="isAustralian">I am an Australian resident</label>
           </div>
           <button type="submit" class="signup-btn">Sign Up</button>
@@ -296,8 +358,7 @@ watch(
         <div class="links">
           <router-link to="/Login" class="login-link">Already have an account? Log in</router-link>
         </div>
-        <div class="terms">
-        </div>
+        <div class="terms"></div>
       </div>
     </div>
   </div>
@@ -305,7 +366,7 @@ watch(
 
 <style scoped>
 .background {
-  background-color: #E0F0E9;
+  background-color: #e0f0e9;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -319,7 +380,7 @@ watch(
 }
 
 .signup-box {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 10px;
   padding: 30px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -333,27 +394,27 @@ watch(
 }
 
 .welcome-text {
-  color: #4A4A4A;
+  color: #4a4a4a;
   text-align: center;
   margin-bottom: 30px;
 }
 
 .input-group {
   margin-bottom: 15px;
-  margin-right: 15px;
-  width: 100%
+  width: 100%;
 }
 
 label {
   display: block;
   margin-bottom: 5px;
-  color: #6B6B6B;
+  color: #6b6b6b;
 }
 
-input {
+input,
+select {
   width: 100%;
   padding: 10px;
-  border: 1px solid #E0F0E9;
+  border: 1px solid #e0f0e9;
   border-radius: 5px;
   font-size: 16px;
 }
@@ -361,8 +422,8 @@ input {
 .signup-btn {
   width: 100%;
   padding: 12px;
-  background-color: #B8D8E8;
-  color: #4A4A4A;
+  background-color: #b8d8e8;
+  color: #4a4a4a;
   border: none;
   border-radius: 5px;
   font-size: 16px;
@@ -371,7 +432,7 @@ input {
 }
 
 .signup-btn:hover {
-  background-color: #A0C8D8;
+  background-color: #a0c8d8;
 }
 
 .links {
@@ -380,7 +441,7 @@ input {
 }
 
 .login-link {
-  color: #B8D8E8;
+  color: #b8d8e8;
   text-decoration: none;
 }
 
@@ -388,106 +449,7 @@ input {
   margin-top: 20px;
   text-align: center;
   font-size: 14px;
-  color: #6B6B6B;
-}
-
-.terms-link {
-  color: #B8D8E8;
-  text-decoration: none;
-}
-.label {
-  width: 100%;
-}
-
-@media (max-width: 576px) {
-  .signup-btn {
-  width: 100%;
-  padding: 6px;
-  background-color: #B8D8E8;
-  color: #4A4A4A;
-  border: none;
-  border-radius: 5px;
-  font-size: 10px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-.welcome-text{
-  font-size: 10px;
-}
-  .logo {
-  display: block;
-  width: 50px;
-  height: auto;
-  margin: 0 auto 20px;
-}
-
-select{
-  font-size: 0.5rem; 
-    width: 30%; 
-    height: auto; 
-    border: 1px solid #E0F0E9;
-    border-radius: 3px; 
-    background-color: white;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-}
-
-
-  .container {
-    padding: 10px;
-    font-size: 6pt;
-    max-height: 600pt;
-  }
-  input {
-  height: 10pt;
-  width: auto;
-  padding: 10px;
-  border: 1px solid #E0F0E9;
-  border-radius: 5px;
-  font-size: 6px;
-}
-
-
-  .signup-box {
-    padding: 20px;
-  }
-  .error-message{
-    font-size: 4pt;
-    margin-top: -3px;
-  }
-  .date-inputs {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-  .date-inputs-mobile select {
-    font-size: 12px; 
-    transform: scale(0.7); 
-    transform-origin: left top; 
-    width: calc(30% / 0.7); 
-}
-}
-@media screen and (max-width: 1440px) {
-  .date-inputs {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-}
-
-
-.date-inputs {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-.date-inputs select {
-  flex: 1;
-  padding: 10px;
-  border: 1px solid #E0F0E9;
-  border-radius: 5px;
-  font-size: 16px;
+  color: #6b6b6b;
 }
 
 .checkbox {
@@ -499,16 +461,62 @@ select{
 .checkbox input {
   width: auto;
 }
+
 .error-message {
   color: red;
   margin-top: -6px;
 }
 
-select {
+.date-inputs {
+  display: flex;
+  justify-content: space-between;
   width: 100%;
+}
+
+.date-inputs select {
+  flex: 1;
   padding: 10px;
-  border: 1px solid #E0F0E9;
+  border: 1px solid #e0f0e9;
   border-radius: 5px;
-  background-color: white;
+  font-size: 16px;
+}
+
+@media (max-width: 576px) {
+  .signup-btn {
+    padding: 6px;
+    font-size: 10px;
+  }
+
+  .welcome-text {
+    font-size: 10px;
+  }
+
+  .logo {
+    width: 50px;
+  }
+
+  select {
+    font-size: 12px;
+    transform: scale(0.7);
+    transform-origin: left top;
+  }
+
+  input {
+    font-size: 6px;
+  }
+
+  .signup-box {
+    padding: 20px;
+  }
+
+  .error-message {
+    font-size: 4pt;
+    margin-top: -3px;
+  }
+
+  .date-inputs-mobile select {
+    transform: scale(0.7);
+    transform-origin: left top;
+  }
 }
 </style>

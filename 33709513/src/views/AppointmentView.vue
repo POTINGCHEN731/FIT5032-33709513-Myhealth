@@ -4,7 +4,7 @@ import MenuBar from '../components/MenuBar.vue'
 <template>
   <MenuBar />
   <div class="about">
-    <h1>Please Contact us</h1>
+    <h1>Here is your appointment</h1>
   </div>
 </template>
 
