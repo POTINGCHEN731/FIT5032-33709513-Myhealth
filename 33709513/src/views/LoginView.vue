@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { isAuthenticated, isAdmin } from '../router/index.js'
+import { isAuthenticated, isAdmin,username } from '../router/index.js'
 import { useRouter } from 'vue-router'
 import icons from '../assets/icons.json'
 
@@ -9,6 +9,7 @@ const formData = ref({
   password: ''
 })
 const router = useRouter()
+
 
 const submitForm = () => {
   const users = JSON.parse(localStorage.getItem('users') || '[]')
@@ -19,6 +20,7 @@ const submitForm = () => {
     if (user.username.toLowerCase() === 'admin') {
       isAdmin.value = true
       isAuthenticated.value = true
+      username.value = user.username
     }
     isAuthenticated.value = true
     alert('Login successful')
@@ -32,6 +34,8 @@ const submitForm = () => {
   }
 }
 </script>
+
+
 
 <template>
   <div class="background">
@@ -159,3 +163,4 @@ const submitForm = () => {
   }
 }
 </style>
+

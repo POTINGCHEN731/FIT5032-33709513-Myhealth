@@ -1,10 +1,38 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { username } from '../router/index.js'
+import { ref } from 'vue'
 import StarRating from 'vue-star-rating'
 import newsData from '../assets/news_insomia.json'
 import MenuBar from '../components/MenuBar.vue'
 const newsItems = ref(newsData.newsItems)
 
+const rating = ref(0)
+
+const submitScore = (newsId, newsTitle, rating) => {
+  if (!username.value) {
+    alert('please login first')
+    return
+  }
+  const scores = JSON.parse(localStorage.getItem('newsScores') || '{}')
+  const isScore = scores[newsId]?.find(
+  (score) => score.username === username.value && score.title === newsTitle
+);
+  if (isScore) {
+    scores[newsId] = scores[newsId].filter(score => score.username !== username.value);
+    alert('your score for this news has been updated')
+  }
+  if (!scores[newsId]) {
+  scores[newsId] = [];
+}
+  scores[newsId].push({
+    username: username.value,
+    title: newsTitle,
+    rating: rating
+  })
+
+  localStorage.setItem('newsScores', JSON.stringify(scores))
+  alert('submit success')
+};
 
 
 const insomniaInfo = {
@@ -58,7 +86,7 @@ const insomniaInfo = {
                       <h5 class="card-title">{{ news.title }}</h5>
                       <p class="card-text">{{ news.summary }}</p>
                       <StarRating
-                        v-model="news.rating"
+                        v-model:rating="rating"
                         increment="0.5"
                         :star-size="20"
                         active-color="#007bff"
@@ -68,7 +96,12 @@ const insomniaInfo = {
                     <div
                       class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-center"
                     >
-                      <button class="btn btn-primary btn-sm">submit</button>
+                      <button
+                        @click="submitScore(news.id, news.title, rating)"
+                        class="btn btn-primary btn-sm"
+                      >
+                        submit
+                      </button>
                       <!-- <div class="average-score">
                         average-score: <span class="fw-bold">{{ averageScore.toFixed(1) }}</span>
                       </div> -->

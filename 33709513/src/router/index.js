@@ -10,6 +10,7 @@ import AppointmentView from '../views/AppointmentView.vue'
 
 const isAuthenticated = ref(false)
 const isAdmin = ref(false)
+const username = ref('')
 
 const routes = [
   {
@@ -55,4 +56,4 @@ const router = createRouter({
 })
 
 export default router
-export { isAuthenticated, isAdmin }
+export { isAuthenticated, isAdmin, username }
