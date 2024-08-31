@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from 'vue'
-import { isAuthenticated, isAdmin,username } from '../router/index.js'
+import { isAuthenticated, isAdmin, username } from '../router/index.js'
 import { useRouter } from 'vue-router'
 import icons from '../assets/icons.json'
 
@@ -10,8 +10,27 @@ const formData = ref({
 })
 const router = useRouter()
 
+const sanitizeInput = (input) => {
+  if (typeof input !== 'string') {
+    return input
+  }
+
+  const sanitizedInput = input.replace(/<[^>]*>?/gm, '')
+
+  if (sanitizedInput !== input) {
+    alert('Your input has been sanitized to remove potentially unsafe content.')
+  }
+
+  return sanitizedInput
+}
+
 
 const submitForm = () => {
+  const sanitizedUsername = sanitizeInput(formData.value.username);
+  const sanitizedPassword = sanitizeInput(formData.value.password);
+  formData.value.username = sanitizedUsername;
+  formData.value.password = sanitizedPassword;
+
   const users = JSON.parse(localStorage.getItem('users') || '[]')
   const user = users.find(
     (user) => user.username === formData.value.username && user.password === formData.value.password
@@ -20,9 +39,10 @@ const submitForm = () => {
     if (user.username.toLowerCase() === 'admin') {
       isAdmin.value = true
       isAuthenticated.value = true
-      username.value = user.username
+      username.value = formData.value.username
     }
     isAuthenticated.value = true
+    username.value = formData.value.username
     alert('Login successful')
     if (isAdmin.value) {
       router.push('/appointment')
@@ -34,8 +54,6 @@ const submitForm = () => {
   }
 }
 </script>
-
-
 
 <template>
   <div class="background">
@@ -163,4 +181,3 @@ const submitForm = () => {
   }
 }
 </style>
-

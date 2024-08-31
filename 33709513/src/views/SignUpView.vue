@@ -21,6 +21,19 @@ const formData = ref({
   birthDay: '',
   isAustralian: false
 })
+const sanitizeInput = (input) => {
+  if (typeof input !== 'string') {
+    return input
+  }
+
+  const sanitizedInput = input.replace(/<[^>]*>?/gm, '')
+
+  if (sanitizedInput !== input) {
+    alert('Your input has been sanitized to remove potentially unsafe content.')
+  }
+
+  return sanitizedInput
+}
 
 onMounted(() => {
   years.value = Array.from({ length: currentYear - 1900 + 1 }, (_, i) => currentYear - i)
@@ -50,6 +63,11 @@ const updateDays = () => {
 }
 
 const submitForm = () => {
+  formData.value.username = sanitizeInput(formData.value.username)
+  formData.value.password = sanitizeInput(formData.value.password)
+  formData.value.confirmPassword = sanitizeInput(formData.value.confirmPassword)
+  formData.value.userEmail = sanitizeInput(formData.value.userEmail)
+  formData.value.phoneNumber = sanitizeInput(formData.value.phoneNumber)
   let users = JSON.parse(localStorage.getItem('users') || '[]')
 
   const userEmailExists = users.some((user) => user.userEmail === formData.value.userEmail)
@@ -57,13 +75,11 @@ const submitForm = () => {
 
   if (userEmailExists) {
     alert('User email already exists')
-    clearForm()
     return
   }
 
   if (usernameExists) {
     alert('Username already exists')
-    clearForm()
     return
   }
 
@@ -94,16 +110,11 @@ const submitForm = () => {
 
     users.push(newUser)
 
-    try {
-      localStorage.setItem('users', JSON.stringify(users))
-      console.log('User registered successfully:', newUser)
-      alert('Sign up successfully')
-      clearForm()
-      router.push('/Login')
-    } catch (error) {
-      console.error('Error saving to localStorage:', error)
-      alert('An error occurred while registering. Please try again.')
-    }
+    localStorage.setItem('users', JSON.stringify(users))
+    console.log('User registered successfully:', newUser)
+    alert('Sign up successfully')
+    clearForm()
+    router.push('/Login')
   } else {
     console.log('Form has errors:', errors.value)
     alert('Please fill in all the required fields correctly.')
