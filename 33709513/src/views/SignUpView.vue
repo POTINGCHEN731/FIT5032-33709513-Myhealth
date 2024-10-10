@@ -1,13 +1,42 @@
 <script setup>
 import { ref, watch, onMounted } from 'vue'
+import {getAuth, createUserWithEmailAndPassword} from 'firebase/auth' 
 import { useRouter } from 'vue-router'
+import { app } from '../Firebase/init.js'
+import db from '../Firebase/init.js'
+import { doc, setDoc } from 'firebase/firestore'
 
 const router = useRouter()
-
+const auth = getAuth(app)
 const months = Array.from({ length: 12 }, (_, i) => i + 1)
 const days = ref([])
 const years = ref([])
 
+const register = () => {
+  createUserWithEmailAndPassword(auth, formData.value.userEmail, formData.value.password)
+    .then((userCredential) => {
+      const user = userCredential.user
+      console.log('User registered successfully:', user)
+      alert('Sign up successfully')
+      addUser(user.uid)
+      clearForm()
+      router.push('/Login')
+    })
+    .catch((error) => {
+      const errorCode = error.code;
+      let errorMessage = '';
+      if (errorCode === 'auth/email-already-in-use') {
+        errorMessage = 'This email is already in use. Please use a different email.';
+      } else if (errorCode === 'auth/invalid-email') {
+        errorMessage = 'The email address is not valid. Please enter a valid email.';
+      } else {
+        errorMessage = 'Error registering user: ' + error.message;
+      }
+
+      console.error('Error registering Email:', error);
+      alert(errorMessage);
+    });
+}
 const currentYear = new Date().getFullYear()
 const formData = ref({
   userEmail: '',
@@ -61,6 +90,23 @@ const updateDays = () => {
     formData.value.birthDay = ''
   }
 }
+const addUser = async (uid) => {
+  try {
+    await setDoc(doc(db, "users", uid), {
+    userEmail: formData.value.userEmail,
+    username: formData.value.username,
+    password: formData.value.password,
+    phoneNumber: formData.value.phoneNumber,
+    gender: formData.value.gender,
+    birthYear: formData.value.birthYear,
+    birthMonth: formData.value.birthMonth,
+    birthDay: formData.value.birthDay,
+    isAustralian: formData.value.isAustralian  
+  }) }catch (error) {
+    console.error("Error adding document: ", error)
+  }
+}
+
 
 const submitForm = () => {
   formData.value.username = sanitizeInput(formData.value.username)
@@ -96,28 +142,7 @@ const submitForm = () => {
   const hasErrors = Object.values(errors.value).some((error) => error !== null)
 
   if (!hasErrors) {
-    const newUser = {
-      userEmail: formData.value.userEmail,
-      username: formData.value.username,
-      password: formData.value.password,
-      phoneNumber: formData.value.phoneNumber,
-      gender: formData.value.gender,
-      birthYear: formData.value.birthYear,
-      birthMonth: formData.value.birthMonth,
-      birthDay: formData.value.birthDay,
-      isAustralian: formData.value.isAustralian
-    }
-
-    users.push(newUser)
-
-    localStorage.setItem('users', JSON.stringify(users))
-    console.log('User registered successfully:', newUser)
-    alert('Sign up successfully')
-    clearForm()
-    router.push('/Login')
-  } else {
-    console.log('Form has errors:', errors.value)
-    alert('Please fill in all the required fields correctly.')
+    register()
   }
 }
 
@@ -240,7 +265,6 @@ const validateDay = (blur) => {
     errors.value.birthDay = null
   }
 }
-
 watch([() => formData.value.birthYear, () => formData.value.birthMonth], ([newYear, newMonth]) => {
   updateDays(true)
 })
@@ -268,7 +292,7 @@ watch([() => formData.value.birthYear, () => formData.value.birthMonth], ([newYe
           <div class="input-group">
             <label for="email" class="label">Email</label>
             <input
-              type="email"
+              type="text"
               id="email"
               @blur="validateEmail(true)"
               @input="validateEmail(false)"

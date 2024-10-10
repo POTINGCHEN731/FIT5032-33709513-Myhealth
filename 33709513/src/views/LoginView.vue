@@ -1,11 +1,17 @@
 <script setup>
 import { ref } from 'vue'
-import { isAuthenticated, isAdmin, username } from '../router/index.js'
+import db from '../Firebase/init.js'
+import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
+import {isAuthenticated, isAdmin,username } from '../router/index.js'
+import { app } from '../Firebase/init.js'
 import { useRouter } from 'vue-router'
 import icons from '../assets/icons.json'
+import { doc, getDoc } from 'firebase/firestore'
 
+
+const auth = getAuth(app)
 const formData = ref({
-  username: '',
+  email: '',
   password: ''
 })
 const router = useRouter()
@@ -24,34 +30,48 @@ const sanitizeInput = (input) => {
   return sanitizedInput
 }
 
+const signIn = (email, password) => {
+  signInWithEmailAndPassword(auth, email, password)
+    .then(async(userCredential) => { 
+      const userRef = doc(db, 'users',userCredential.user.uid);
+      const user = await getDoc(userRef);
+      if (user.exists()) {
+        username.value = user.data().username;
+        if (user.data().username === 'Admin') {
+          isAdmin.value = true;
+        }
+      }
+      alert(username.value);
+      console.log('User signed in');
+      router.push('/');
+      alert('You have successfully signed in.');
+      isAuthenticated.value = true;
+      console.log(auth.currentUser);
+    }).catch((error) => {
+      const errorCode = error.code;
+  let errorMessage = '';
+
+  if (errorCode === 'auth/invalid-credential') {
+    errorMessage = 'Invalid credentials. Please check your email and password.';
+  } else if (errorCode === 'auth/invalid-email') {
+    errorMessage = ' Please check your email first.';
+  } else if (errorCode === 'auth/missing-password') {
+    errorMessage = 'Missing password. Please try again.';
+  } else {
+    errorMessage = 'Error signing in: ' + error.message;
+  }
+
+  console.error(errorCode, errorMessage);
+  alert(errorMessage);
+    });
+};
 
 const submitForm = () => {
-  const sanitizedUsername = sanitizeInput(formData.value.username);
+  const sanitizedEmail = sanitizeInput(formData.value.email);
   const sanitizedPassword = sanitizeInput(formData.value.password);
-  formData.value.username = sanitizedUsername;
+  formData.value.email = sanitizedEmail;
   formData.value.password = sanitizedPassword;
-
-  const users = JSON.parse(localStorage.getItem('users') || '[]')
-  const user = users.find(
-    (user) => user.username === formData.value.username && user.password === formData.value.password
-  )
-  if (user) {
-    if (user.username.toLowerCase() === 'admin') {
-      isAdmin.value = true
-      isAuthenticated.value = true
-      username.value = formData.value.username
-    }
-    isAuthenticated.value = true
-    username.value = formData.value.username
-    alert('Login successful')
-    if (isAdmin.value) {
-      router.push('/appointment')
-    } else {
-      router.push('/')
-    }
-  } else {
-    alert('Login failed please check your username and password')
-  }
+  signIn(sanitizedEmail, sanitizedPassword);
 }
 </script>
 
@@ -76,8 +96,8 @@ const submitForm = () => {
           <form @submit.prevent="submitForm">
             <div class="row mb-3 mt-2">
               <div class="col-md-12 col-sm-12">
-                <label for="username" class="form-label">Username</label>
-                <input type="text" class="form-control" id="username" v-model="formData.username" />
+                <label for="username" class="form-label">Email</label>
+                <input type="text" class="form-control" id="username" v-model="formData.email" />
               </div>
             </div>
             <div class="row mb-3">
