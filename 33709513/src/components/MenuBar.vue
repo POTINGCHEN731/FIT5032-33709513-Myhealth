@@ -1,5 +1,5 @@
 <script setup>
-import { isAuthenticated, isAdmin } from '../router/index.js'
+import { isAuthenticated} from '../router/index.js'
 import Menubar from 'primevue/menubar'
 import { useRouter } from 'vue-router'
 
@@ -10,52 +10,38 @@ const signIn = () => {
 }
 
 const signOut = () => {
-  isAuthenticated.value = false
-  isAdmin.value = false
+  isAuthenticated.value = null
   router.push('/Login')
 }
 
-const items = [
-  {
-    label: 'Home',
-    icon: 'pi pi-fw ',
-    command: () => {
-      router.push('/')
-    }
-  }
-]
-if (isAuthenticated.value) {
-  items.push(
-    {
-      label: 'About',
-      icon: 'pi pi-fw ',
-      command: () => {
-        router.push('/about')
-      }
-    },
-    {
-      label: 'Contact',
-      icon: 'pi pi-fw ',
-      command: () => {
-        router.push('/contact')
-      }
-    }
-  )
-}
 
-if (isAdmin.value) {
-  items.push({
-    label: 'Appointment',
-    icon: 'pi pi-fw ',
-    command: () => {
-      router.push('/appointment')
-    }
-  })
-}
 </script>
 
 <template>
-  <Menubar :model="items">
+  <Menubar>
+    <template #start>
+      <a class="p-menuitem-link sign-in-item button-spacing" @click="router.push('/')">
+        <span class="p-menuitem-icon pi pi-fw pi-user"></span>
+        <span class="p-menuitem-text">Home</span>
+      </a>     
+      <a v-if="isAuthenticated" class="p-menuitem-link sign-in-item button-spacing" @click="router.push('/About')">
+        <span class="p-menuitem-icon pi pi-fw pi-user"></span>
+        <span class="p-menuitem-text"> About</span>
+      </a>
+      <a v-if="isAuthenticated" class="p-menuitem-link sign-in-item button-spacing" @click="router.push('/Contact')">
+        <span class="p-menuitem-icon pi pi-fw pi-user"></span>
+        <span class="p-menuitem-text"> Contact</span>
+      </a>
+      <a v-if="isAuthenticated==='Admin'" class="p-menuitem-link sign-in-item button-spacing" @click="router.push('/Appointment')">
+        <span class="p-menuitem-icon pi pi-fw pi-user"></span>
+        <span class="p-menuitem-text"> Appointment</span>
+      </a>
+      <a v-if="isAuthenticated && isAuthenticated!=='Admin' " class="p-menuitem-link sign-in-item button-spacing" @click="router.push('/UserAppointment')">
+        <span class="p-menuitem-icon pi pi-fw pi-user"></span>
+        <span class="p-menuitem-text"> Appointment</span>
+      </a>
+
+    </template>
     <template #end>
       <template v-if="!isAuthenticated">
         <a class="p-menuitem-link sign-in-item" @click="signIn">
@@ -76,5 +62,8 @@ if (isAdmin.value) {
 <style scoped>
 .sign-in-item {
   cursor: pointer;
+}
+.button-spacing {
+  margin-right: 15px;
 }
 </style>

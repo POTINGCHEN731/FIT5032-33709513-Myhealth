@@ -1,0 +1,32 @@
+{
+    "newsItems": [
+      {
+        "id": 1,
+        "title": "New Research Sheds Light on OCD and Anxiety Link",
+        "summary": "Studies have shown a strong association between obsessive-compulsive disorder (OCD) and anxiety, suggesting potential new treatments targeting both conditions.",
+        "image": "src/components/icons/OCD_1.jpg",
+        "link": "#",
+        "date": "2023-06-12",
+        "rating": 4.7
+      },
+      {
+        "id": 2,
+        "title": "Cognitive Behavioral Therapy: An Effective Treatment for OCD",
+        "summary": "Experts highlight Cognitive Behavioral Therapy (CBT) as one of the most effective treatments for managing OCD symptoms, offering long-term relief for patients.",
+        "image": "src/components/icons/OCD_2.jpg",
+        "link": "#",
+        "date": "2023-06-05",
+        "rating": 4.9
+      },
+      {
+        "id": 3,
+        "title": "Exploring the Genetic Basis of OCD",
+        "summary": "Recent research delves into the genetic factors that may contribute to the development of OCD, providing insights into future treatments.",
+        "image": "src/components/icons/OCD_3.jpg",
+        "link": "#",
+        "date": "2023-06-01",
+        "rating": 4.5
+      }
+    ]
+  }
+  

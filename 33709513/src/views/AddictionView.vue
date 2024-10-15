@@ -3,16 +3,16 @@ import { username } from '../router/index.js'
 import { ref, onMounted } from 'vue'
 import {submitScore } from '../components/NewsRating.js';
 import StarRating from 'vue-star-rating'
-import newsData from '../assets/news_insomia.json'
+import newsData from '../assets/news_addiction.json'
 import { AverageRating } from '../components/AverageRating.js';
 const newsItems = ref(newsData.newsItems)
-const type = 'Insomnia';
+const type = 'Addiction';
 
 const insomniaInfo = {
-  title: ' What is Insomnia',
+  title: ' What is Addiction',
   description:
-    'Insomnia is a common sleep disorder characterized by difficulty falling asleep, staying asleep, or both. It can lead to daytime fatigue, mood disturbances, and decreased performance in work or daily activities. Chronic insomnia can have significant impacts on overall health and quality of life.',
-  image: 'src/components/icons/Insomia.jpg'
+    'Addiction is a complex condition characterized by compulsive drug use or engagement in harmful behaviors despite negative consequences. It is a chronic brain disease that affects the brain’s reward, motivation, and memory functions. Addiction can lead to physical and psychological dependence, withdrawal symptoms, and a loss of control over substance use. Treatment for addiction often involves a combination of therapy, medication, and lifestyle changes. Early intervention and support are essential for recovery.',
+  image: 'src/components/icons/Addiction_3.jpg'
 }
 onMounted(async () => {
   for (let i = 0; i < newsItems.value.length; i++) {

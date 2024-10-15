@@ -2,10 +2,9 @@
 import { ref } from 'vue'
 import db from '../Firebase/init.js'
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
-import {isAuthenticated, isAdmin,username } from '../router/index.js'
+import {isAuthenticated,username } from '../router/index.js'
 import { app } from '../Firebase/init.js'
 import { useRouter } from 'vue-router'
-import icons from '../assets/icons.json'
 import { doc, getDoc } from 'firebase/firestore'
 
 
@@ -26,9 +25,9 @@ const sanitizeInput = (input) => {
   if (sanitizedInput !== input) {
     alert('Your input has been sanitized to remove potentially unsafe content.')
   }
-
   return sanitizedInput
 }
+
 
 const signIn = (email, password) => {
   signInWithEmailAndPassword(auth, email, password)
@@ -37,15 +36,11 @@ const signIn = (email, password) => {
       const user = await getDoc(userRef);
       if (user.exists()) {
         username.value = user.data().username;
-        if (user.data().username === 'Admin') {
-          isAdmin.value = true;
-        }
+        isAuthenticated.value = username.value;
       }
-      alert(username.value);
       console.log('User signed in');
       router.push('/');
       alert('You have successfully signed in.');
-      isAuthenticated.value = true;
       console.log(auth.currentUser);
     }).catch((error) => {
       const errorCode = error.code;
@@ -73,6 +68,7 @@ const submitForm = () => {
   formData.value.password = sanitizedPassword;
   signIn(sanitizedEmail, sanitizedPassword);
 }
+
 </script>
 
 <template>
@@ -126,24 +122,6 @@ const submitForm = () => {
               </div>
             </div>
           </form>
-
-          <div class="row mb-3">
-            <div class="col-md-16 col-sm-16 d-flex align-items-center justify-content-center">
-              <hr class="flex-grow-1" />
-              <span class="mx-2">or</span>
-              <hr class="flex-grow-1" />
-            </div>
-          </div>
-
-          <div class="row mt-4">
-            <div
-              class="col-md-6 col-sm-6 offset-md-3 d-flex justify-content-around icons-container"
-            >
-              <div v-for="icon in icons.icons" :key="icon.name">
-                <img :src="icon.image_path" :alt="icon.alt_text" class="responsive-icon" />
-              </div>
-            </div>
-          </div>
         </div>
       </div>
       <div class="row"></div>

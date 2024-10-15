@@ -3,16 +3,16 @@ import { username } from '../router/index.js'
 import { ref, onMounted } from 'vue'
 import {submitScore } from '../components/NewsRating.js';
 import StarRating from 'vue-star-rating'
-import newsData from '../assets/news_insomia.json'
+import newsData from '../assets/news_depression.json'
 import { AverageRating } from '../components/AverageRating.js';
 const newsItems = ref(newsData.newsItems)
-const type = 'Insomnia';
+const type = 'Depression';
 
 const insomniaInfo = {
-  title: ' What is Insomnia',
+  title: ' What is Depression',
   description:
-    'Insomnia is a common sleep disorder characterized by difficulty falling asleep, staying asleep, or both. It can lead to daytime fatigue, mood disturbances, and decreased performance in work or daily activities. Chronic insomnia can have significant impacts on overall health and quality of life.',
-  image: 'src/components/icons/Insomia.jpg'
+    'Depression is a mood disorder that causes persistent feelings of sadness, hopelessness, and loss of interest. It is a common mental health condition that can affect how you feel, think, and handle daily activities. Depression can lead to a variety of emotional and physical problems and can decrease a person’s ability to function at work and at home. Treatment for depression may involve therapy, medication, and lifestyle changes. Early diagnosis and intervention are essential for managing symptoms and improving quality of life.',
+  image: 'src/components/icons/depression_1.jpg'
 }
 onMounted(async () => {
   for (let i = 0; i < newsItems.value.length; i++) {

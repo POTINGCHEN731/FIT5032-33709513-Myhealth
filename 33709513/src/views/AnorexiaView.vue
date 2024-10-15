@@ -3,16 +3,16 @@ import { username } from '../router/index.js'
 import { ref, onMounted } from 'vue'
 import {submitScore } from '../components/NewsRating.js';
 import StarRating from 'vue-star-rating'
-import newsData from '../assets/news_insomia.json'
+import newsData from '../assets/news_anorexia.json'
 import { AverageRating } from '../components/AverageRating.js';
 const newsItems = ref(newsData.newsItems)
-const type = 'Insomnia';
+const type = 'Anorexia';
 
 const insomniaInfo = {
-  title: ' What is Insomnia',
+  title: ' What is Anorexia',
   description:
-    'Insomnia is a common sleep disorder characterized by difficulty falling asleep, staying asleep, or both. It can lead to daytime fatigue, mood disturbances, and decreased performance in work or daily activities. Chronic insomnia can have significant impacts on overall health and quality of life.',
-  image: 'src/components/icons/Insomia.jpg'
+    'Anorexia nervosa is a serious eating disorder characterized by an intense fear of gaining weight, leading to extreme food restriction, severe weight loss, and a distorted body image. People with anorexia often see themselves as overweight even when they are underweight. It can have severe health consequences, including malnutrition, bone density loss, heart problems, and organ failure. Anorexia affects both physical and mental health, and it often coexists with conditions like anxiety and depression. Early intervention and treatment, such as therapy and medical support, are crucial for recovery.',
+  image: 'src/components/icons/Anorexia_1.jpg'
 }
 onMounted(async () => {
   for (let i = 0; i < newsItems.value.length; i++) {

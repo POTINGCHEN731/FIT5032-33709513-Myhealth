@@ -1,0 +1,23 @@
+{
+    "therapists": [
+      {
+        "id": 1,
+        "name": "Dr. Emily Chen",
+        "description": "Dr. Emily Chen is a licensed clinical psychologist with over 10 years of experience in cognitive-behavioral therapy (CBT). She specializes in treating anxiety and depression, helping clients build coping mechanisms and develop healthier thought patterns. Emily is passionate about providing culturally sensitive therapy, particularly for immigrant families and individuals dealing with cross-cultural challenges.",
+        "image": "src/components/icons/doctor_1.jpg"
+      },
+      {
+        "id": 2,
+        "name": "Mr. John Miller",
+        "description": "John Miller, a certified therapist, focuses on relationship counseling and conflict resolution. With a background in family systems therapy, he helps couples and families navigate complex interpersonal dynamics. John is dedicated to fostering open communication and emotional understanding, guiding clients through relationship struggles, and helping them rebuild trust and connection.",
+        "image": "src/components/icons/doctor_2.jpg"
+      },
+      {
+        "id": 3,
+        "name": "Mr. Jordan Lin",
+        "description": "Jordan Lin is a trauma-informed counselor with expertise in working with individuals recovering from past trauma, including PTSD and childhood abuse. She integrates mindfulness techniques with trauma-focused cognitive behavioral therapy (TF-CBT), offering her clients tools to regain control over their emotions and improve their mental well-being. Sophia also provides workshops on self-care and resilience building.",
+        "image": "src/components/icons/doctor_3.jpg"
+      }
+    ]
+  }
+  

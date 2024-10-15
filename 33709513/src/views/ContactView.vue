@@ -1,8 +1,6 @@
 <script setup>
-import MenuBar from '../components/MenuBar.vue'
 </script>
 <template>
-  <MenuBar />
   <div class="about">
     <h1>Please Contact us</h1>
   </div>

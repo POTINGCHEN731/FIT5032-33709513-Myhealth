@@ -1,12 +1,52 @@
 <script setup>
 import { username } from '../router/index.js'
-import { ref, onMounted } from 'vue'
-import {submitScore } from '../components/NewsRating.js';
+import { ref } from 'vue'
 import StarRating from 'vue-star-rating'
-import newsData from '../assets/news_insomia.json'
-import { AverageRating } from '../components/AverageRating.js';
+import newsData from '../assets/news_anorexia.json'
 const newsItems = ref(newsData.newsItems)
-const type = 'Insomnia';
+
+
+const submitScore = (newsId, newsTitle, rating) => {
+  if (!username.value) {
+    alert('please login first')
+    return
+  }
+  const scores = JSON.parse(localStorage.getItem('newsScores') || '{}')
+  const isScore = scores[newsId]?.find(
+    (score) => score.username === username.value && score.title === newsTitle
+  )
+  if (isScore) {
+    scores[newsId] = scores[newsId].filter((score) => score.username !== username.value)
+    alert('your score for this news has been updated')
+  }
+  if (!scores[newsId]) {
+    scores[newsId] = []
+  }
+  scores[newsId].push({
+    username: username.value,
+    title: newsTitle,
+    rating: rating
+  })
+
+  localStorage.setItem('newsScores', JSON.stringify(scores))
+  alert('submit success')
+}
+
+const getAverageScore = (newsId, newsTitle) => {
+  const scores = JSON.parse(localStorage.getItem('newsScores') || '{}');
+  const newsScores = scores[newsId] || [];
+  
+  const matchingScores = newsScores.filter(score => score.title === newsTitle);
+  
+  if (matchingScores.length === 0) {
+    return 0; 
+  }
+  
+  const totalScore = matchingScores.reduce((acc, score) => acc + score.rating, 0);
+  return totalScore / matchingScores.length;
+};
+
+
 
 const insomniaInfo = {
   title: ' What is Insomnia',
@@ -14,18 +54,6 @@ const insomniaInfo = {
     'Insomnia is a common sleep disorder characterized by difficulty falling asleep, staying asleep, or both. It can lead to daytime fatigue, mood disturbances, and decreased performance in work or daily activities. Chronic insomnia can have significant impacts on overall health and quality of life.',
   image: 'src/components/icons/Insomia.jpg'
 }
-onMounted(async () => {
-  for (let i = 0; i < newsItems.value.length; i++) {
-    const item = newsItems.value[i];
-    try {
-      const averageRating = await AverageRating(item.id, type); 
-      newsItems.value[i].averageRating = averageRating; 
-    } catch (error) {
-      console.error('Error fetching average rating:', error);
-      newsItems.value[i].averageRating = 'N/A'; 
-    }
-  }
-});
 </script>
 
 <template>
@@ -52,7 +80,7 @@ onMounted(async () => {
             </div>
           </div>
 
-          <h2 class="text-center mb-4">Latest News</h2>
+          <h2 class="text-center mb-4">Latest Insomnia News</h2>
 
           <div class="row">
             <div class="col-12 mb-4" v-for="(news, index) in newsItems" :key="index">
@@ -81,14 +109,14 @@ onMounted(async () => {
                       class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-center"
                     >
                       <button
-                        @click="submitScore(type,news.id, news.title, rating,username)"
+                        @click="submitScore(news.id, news.title, rating)"
                         class="btn btn-primary btn-sm"
                       >
                         submit
                       </button>
                       <div class="average-score">
                         average-score:
-                        <span class="fw-bold">{{ news.averageRating || 'Loading...' }}</span>
+                        <span class="fw-bold">{{ getAverageScore(news.id, news.title).toFixed(1) }}</span>
                       </div>
                     </div>
                   </div>

@@ -1,0 +1,32 @@
+{
+    "newsItems": [
+      {
+        "id": 1,
+        "title": "New Insights on Anorexia Nervosa Treatment",
+        "summary": "A groundbreaking study reveals promising new treatment methods for managing anorexia, focusing on both psychological and nutritional approaches.",
+        "image": "src/components/icons/hate.jpg",
+        "link": "#",
+        "date": "2023-06-20",
+        "rating": 4.6
+      },
+      {
+        "id": 2,
+        "title": "Understanding the Psychological Triggers of Anorexia",
+        "summary": "Experts explore the deep-rooted psychological factors contributing to anorexia, such as body dysmorphia and social pressures.",
+        "image": "src/components/icons/Anorexia_2.jpg",
+        "link": "#",
+        "date": "2023-06-15",
+        "rating": 4.7
+      },
+      {
+        "id": 3,
+        "title": "The Role of Family Support in Recovery from Anorexia",
+        "summary": "Family involvement in therapy has been shown to significantly improve outcomes for individuals suffering from anorexia.",
+        "image": "src/components/icons/Anorexia_3.jpg",
+        "link": "#",
+        "date": "2023-06-10",
+        "rating": 4.9
+      }
+    ]
+  }
+  

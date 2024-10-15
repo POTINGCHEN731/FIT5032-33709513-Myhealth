@@ -3,16 +3,16 @@ import { username } from '../router/index.js'
 import { ref, onMounted } from 'vue'
 import {submitScore } from '../components/NewsRating.js';
 import StarRating from 'vue-star-rating'
-import newsData from '../assets/news_insomia.json'
+import newsData from '../assets/news_anxiety.json'
 import { AverageRating } from '../components/AverageRating.js';
 const newsItems = ref(newsData.newsItems)
-const type = 'Insomnia';
+const type = 'Anxiety';
 
 const insomniaInfo = {
-  title: ' What is Insomnia',
+  title: ' What is Anxiety',
   description:
-    'Insomnia is a common sleep disorder characterized by difficulty falling asleep, staying asleep, or both. It can lead to daytime fatigue, mood disturbances, and decreased performance in work or daily activities. Chronic insomnia can have significant impacts on overall health and quality of life.',
-  image: 'src/components/icons/Insomia.jpg'
+    'Anxiety is a normal and often healthy emotion. However, when a person regularly feels disproportionate levels of anxiety, it might become a medical disorder. Anxiety disorders form a category of mental health diagnoses that lead to excessive nervousness, fear, apprehension, and worry. These disorders alter how a person processes emotions and behave, also causing physical symptoms. Mild anxiety might be vague and unsettling, while severe anxiety may seriously affect day-to-day living.',
+    image: 'src/components/icons/anxiety_3.jpg'
 }
 onMounted(async () => {
   for (let i = 0; i < newsItems.value.length; i++) {
