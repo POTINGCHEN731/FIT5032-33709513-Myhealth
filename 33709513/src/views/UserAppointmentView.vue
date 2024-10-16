@@ -5,9 +5,6 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 const consultantItems = ref(therapistData.therapists)
-const goToAppointment = (consultantId) => {
-      router.push({ path: `/appointment`, query: { id: consultantId } });
-    };
 
 
 </script>
@@ -40,7 +37,7 @@ const goToAppointment = (consultantId) => {
                     <div
                       class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-center"
                     >
-                    <button class="btn btn-primary" @click="goToAppointment(consultant.id)">
+                    <button class="btn btn-primary" @click="router.push('/Contact')">
                         Book Appointment
                       </button>
                     </div>

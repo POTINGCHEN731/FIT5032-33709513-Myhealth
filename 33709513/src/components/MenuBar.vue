@@ -24,21 +24,17 @@ const signOut = () => {
         <span class="p-menuitem-icon pi pi-fw pi-user"></span>
         <span class="p-menuitem-text">Home</span>
       </a>     
-      <a v-if="isAuthenticated" class="p-menuitem-link sign-in-item button-spacing" @click="router.push('/About')">
+      <a v-if="isAuthenticated && isAuthenticated!=='Admin' " class="p-menuitem-link sign-in-item button-spacing" @click="router.push('/About')">
         <span class="p-menuitem-icon pi pi-fw pi-user"></span>
         <span class="p-menuitem-text"> About</span>
       </a>
-      <a v-if="isAuthenticated" class="p-menuitem-link sign-in-item button-spacing" @click="router.push('/Contact')">
-        <span class="p-menuitem-icon pi pi-fw pi-user"></span>
-        <span class="p-menuitem-text"> Contact</span>
-      </a>
       <a v-if="isAuthenticated==='Admin'" class="p-menuitem-link sign-in-item button-spacing" @click="router.push('/Appointment')">
         <span class="p-menuitem-icon pi pi-fw pi-user"></span>
-        <span class="p-menuitem-text"> Appointment</span>
+        <span class="p-menuitem-text"> Admin</span>
       </a>
       <a v-if="isAuthenticated && isAuthenticated!=='Admin' " class="p-menuitem-link sign-in-item button-spacing" @click="router.push('/UserAppointment')">
         <span class="p-menuitem-icon pi pi-fw pi-user"></span>
-        <span class="p-menuitem-text"> Appointment</span>
+        <span class="p-menuitem-text"> Consultants</span>
       </a>
 
     </template>

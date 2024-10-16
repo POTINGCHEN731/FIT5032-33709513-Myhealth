@@ -18,6 +18,12 @@ import AnxietyView from '../views/AnxietyView.vue'
 const isAuthenticated = ref(null)
 const username = ref('')
 
+const userInfo = ref({
+  email: '',
+  gender: '',
+  age: '',
+})
+
 const routes = [
   {
     path: '/',
@@ -122,4 +128,4 @@ const router = createRouter({
 })
 
 export default router
-export { isAuthenticated, username }
+export { isAuthenticated, username, userInfo }

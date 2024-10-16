@@ -2,12 +2,15 @@
 import { ref } from 'vue'
 import db from '../Firebase/init.js'
 import {getAuth, signInWithEmailAndPassword} from 'firebase/auth'
-import {isAuthenticated,username } from '../router/index.js'
+import {isAuthenticated,username,userInfo } from '../router/index.js'
 import { app } from '../Firebase/init.js'
 import { useRouter } from 'vue-router'
 import { doc, getDoc } from 'firebase/firestore'
 
-
+const getCurrentYear = () => {
+  const currentYear = new Date().getFullYear()
+  return currentYear
+}
 const auth = getAuth(app)
 const formData = ref({
   email: '',
@@ -35,10 +38,12 @@ const signIn = (email, password) => {
       const userRef = doc(db, 'users',userCredential.user.uid);
       const user = await getDoc(userRef);
       if (user.exists()) {
+        userInfo.value.email = user.data().userEmail;
+        userInfo.value.gender = user.data().gender;
+        userInfo.value.age = getCurrentYear()-user.data().birthYear;
         username.value = user.data().username;
         isAuthenticated.value = username.value;
       }
-      console.log('User signed in');
       router.push('/');
       alert('You have successfully signed in.');
       console.log(auth.currentUser);

@@ -114,21 +114,7 @@ const submitForm = () => {
   formData.value.confirmPassword = sanitizeInput(formData.value.confirmPassword)
   formData.value.userEmail = sanitizeInput(formData.value.userEmail)
   formData.value.phoneNumber = sanitizeInput(formData.value.phoneNumber)
-  let users = JSON.parse(localStorage.getItem('users') || '[]')
-
-  const userEmailExists = users.some((user) => user.userEmail === formData.value.userEmail)
-  const usernameExists = users.some((user) => user.username === formData.value.username)
-
-  if (userEmailExists) {
-    alert('User email already exists')
-    return
-  }
-
-  if (usernameExists) {
-    alert('Username already exists')
-    return
-  }
-
+  
   validateName(true)
   validatePassword(true)
   validateEmail(true)
