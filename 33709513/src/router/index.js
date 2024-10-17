@@ -14,6 +14,7 @@ import AddictionView from '../views/AddictionView.vue'
 import DepressionView from '../views/DepressionView.vue'
 import AnxietyView from '../views/AnxietyView.vue'
 import MyAppointmentView from '@/views/MyAppointmentView.vue'
+import MapView from '@/views/MapView.vue'
 
 
 const isAuthenticated = ref(null)
@@ -87,6 +88,18 @@ const routes = [
     }
   },
   {
+    path: '/Map',
+    name: 'Map',
+    component: MapView,
+    beforeEnter: (to, from, next) => {
+      if (!isAuthenticated.value) {
+        next({ name: 'Login' })
+      } else {
+        next()
+      }
+    }
+  },
+  {
     path: '/About',
     name: 'About',
     component: AboutView,
@@ -136,10 +149,14 @@ const routes = [
   }
 ]
 
+if (localStorage.getItem('isAuthenticated')) {
+  isAuthenticated.value = localStorage.getItem('isAuthenticated');
+}
 const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
 
 export default router
 export { isAuthenticated, username, userInfo }

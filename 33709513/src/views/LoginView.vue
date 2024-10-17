@@ -42,11 +42,13 @@ const signIn = (email, password) => {
         userInfo.value.gender = user.data().gender;
         userInfo.value.age = getCurrentYear()-user.data().birthYear;
         username.value = user.data().username;
-        isAuthenticated.value = username.value;
       }
+      localStorage.setItem('userInfo', JSON.stringify(userInfo.value));
+      localStorage.setItem('isAuthenticated',  username.value);
+      isAuthenticated.value = localStorage.getItem('isAuthenticated')
       router.push('/');
       alert('You have successfully signed in.');
-      console.log(auth.currentUser);
+      console.log(isAuthenticated.value);
     }).catch((error) => {
       const errorCode = error.code;
   let errorMessage = '';

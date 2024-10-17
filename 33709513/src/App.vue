@@ -13,5 +13,5 @@ import MenuBar from './components/MenuBar.vue';
 </template>
 
 <style scoped>
-/* 你的样式 */
 </style>
+

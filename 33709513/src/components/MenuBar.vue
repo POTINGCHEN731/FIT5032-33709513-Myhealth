@@ -10,6 +10,7 @@ const signIn = () => {
 }
 
 const signOut = () => {
+  localStorage.removeItem('isAuthenticated')
   isAuthenticated.value = null
   router.push('/Login')
 }
@@ -39,6 +40,10 @@ const signOut = () => {
       <a v-if="isAuthenticated && isAuthenticated!=='Admin' " class="p-menuitem-link sign-in-item button-spacing" @click="router.push('/MyAppointment')">
         <span class="p-menuitem-icon pi pi-fw pi-user"></span>
         <span class="p-menuitem-text"> Appointment</span>
+      </a>
+      <a v-if="isAuthenticated && isAuthenticated!=='Admin' " class="p-menuitem-link sign-in-item button-spacing" @click="router.push('/Map')">
+        <span class="p-menuitem-icon pi pi-fw pi-user"></span>
+        <span class="p-menuitem-text"> Map</span>
       </a>
 
     </template>
