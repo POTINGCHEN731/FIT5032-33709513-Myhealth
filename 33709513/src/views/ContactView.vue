@@ -3,6 +3,8 @@ import { ref } from 'vue'
 import { userInfo } from '../router/index.js';
 import db from '../Firebase/init.js'
 import {  addDoc, collection } from 'firebase/firestore'
+const appointments = ref([]);
+import { fetchAppointments } from '../components/GetAppointments';
 
 const sanitizeInput = (input) => {
   if (typeof input !== 'string') {
@@ -75,7 +77,7 @@ const clearForm = () => {
   }
 }
 
-const submitForm = () => {
+const submitForm = async() => {
 
     formData.value.firstname = sanitizeInput(formData.value.firstname),
     formData.value.lastname = sanitizeInput(formData.value.lastname),
@@ -90,6 +92,13 @@ const submitForm = () => {
   const hasErrors = Object.values(errors.value).some((error) => error !== null)
 
 if (!hasErrors) {
+  const data = await fetchAppointments();
+    const filteredAppointments = data.filter(appointment => appointment.email === userInfo.value.email);
+    appointments.value = filteredAppointments;
+    if (appointments.value.length >= 5) {
+      alert('You already have 5 or more appointments, booking is not allowed.');
+      return;
+    }
   book()
   alert('Appointment booked successfully')
   clearForm()
@@ -102,8 +111,7 @@ const book = async () => {
     email: userInfo.value.email,
     gender: userInfo.value.gender,
     age: userInfo.value.age,
-    firstname: formData.value.firstname,
-    lastname: formData.value.lastname,
+    name: formData.value.firstname + ' ' + formData.value.lastname,
     appointmentDate: formData.value.appointmentDate,
     appointmentDoctor: formData.value.appointmentDoctor 
   }) }catch (error) {
@@ -155,9 +163,9 @@ const book = async () => {
                 id="appointmentDoctor"
               >
                 <option value="" disabled>Select Doctor</option>
-                <option value="doctorA">Dr. Emily Chen</option>
-                <option value="doctorB">Mr. John Miller</option>
-                <option value="doctorC">Mr. Jordan Lin</option>
+                <option value="Dr. Emily Chen">Dr. Emily Chen</option>
+                <option value="Mr. John Miller">Mr. John Miller</option>
+                <option value="Mr. Jordan Lin">Mr. Jordan Lin</option>
               </select>
             </div>
             <div v-if="errors.appointmentDoctor" class="error-message">{{ errors.appointmentDoctor }}</div>

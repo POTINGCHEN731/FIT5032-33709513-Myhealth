@@ -36,6 +36,10 @@ const signOut = () => {
         <span class="p-menuitem-icon pi pi-fw pi-user"></span>
         <span class="p-menuitem-text"> Consultants</span>
       </a>
+      <a v-if="isAuthenticated && isAuthenticated!=='Admin' " class="p-menuitem-link sign-in-item button-spacing" @click="router.push('/MyAppointment')">
+        <span class="p-menuitem-icon pi pi-fw pi-user"></span>
+        <span class="p-menuitem-text"> Appointment</span>
+      </a>
 
     </template>
     <template #end>

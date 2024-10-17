@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue';
 
 const description = "Hello, this is a simple health app that includes information about diseases and related news reports. In addition, it offers personal consultations with therapists and appointment scheduling services. We will contact the therapist to help address your concerns. If you have further questions, please contact us:"
 

@@ -13,6 +13,7 @@ import OCDView from '../views/OCDView.vue'
 import AddictionView from '../views/AddictionView.vue'
 import DepressionView from '../views/DepressionView.vue'
 import AnxietyView from '../views/AnxietyView.vue'
+import MyAppointmentView from '@/views/MyAppointmentView.vue'
 
 
 const isAuthenticated = ref(null)
@@ -97,6 +98,19 @@ const routes = [
       }
     }
   },
+  {
+    path: '/MyAppointment',
+    name: 'MyAppointment',
+    component: MyAppointmentView,
+    beforeEnter: (to, from, next) => {
+      if (!isAuthenticated.value) {
+        next({ name: 'Login' })
+      } else {
+        next()
+      }
+    }
+  },
+
   {
     path: '/Appointment',
     name: 'Appointment',
