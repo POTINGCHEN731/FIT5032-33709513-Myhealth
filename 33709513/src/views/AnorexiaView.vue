@@ -87,7 +87,6 @@ onMounted(async () => {
                         submit
                       </button>
                       <div class="average-score">
-                        average-score:
                         <span class="fw-bold">{{ news.averageRating || 'Loading...' }}</span>
                       </div>
                     </div>

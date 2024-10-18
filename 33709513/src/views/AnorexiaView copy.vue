@@ -115,7 +115,6 @@ const insomniaInfo = {
                         submit
                       </button>
                       <div class="average-score">
-                        average-score:
                         <span class="fw-bold">{{ getAverageScore(news.id, news.title).toFixed(1) }}</span>
                       </div>
                     </div>

@@ -7,8 +7,6 @@
         <p v-if="selectedHospital">Name: <strong>{{ selectedHospital.name }}</strong></p>
         <p v-if="distance">Distance: {{ distance }} km</p>
         <p v-if="estimatedTime">Estimated Time: {{ estimatedTime }} minutes</p>
-  
-        <!-- Add a section for route instructions -->
         <div v-if="routeInstructions.length">
           <h4>Route Instructions:</h4>
           <ol>
@@ -38,7 +36,7 @@
         selectedHospital: null,
         distance: null,
         estimatedTime: null,
-        routeInstructions: [], // To hold route instructions
+        routeInstructions: [], 
         map: null,
         directions: null,
       };
@@ -148,6 +146,21 @@
     width: 100%;
     height: 100%;
   }
+  .loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(0,0,0,0.1);
+  border-radius: 50%;
+  border-top-color: #3498db;
+  animation: spin 1s ease-in-out infinite;
+  z-index: 1000;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
 
   </style>
   

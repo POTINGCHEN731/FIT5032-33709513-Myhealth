@@ -151,6 +151,7 @@ const routes = [
 
 if (localStorage.getItem('isAuthenticated')) {
   isAuthenticated.value = localStorage.getItem('isAuthenticated');
+  userInfo.value = JSON.parse(localStorage.getItem('userInfo'));
 }
 const router = createRouter({
   history: createWebHistory(),
