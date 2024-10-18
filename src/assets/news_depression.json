@@ -4,7 +4,7 @@
         "id": 1,
         "title": "New Study Explores Depression and its Link to Chronic Stress",
         "summary": "Researchers have uncovered strong connections between chronic stress and depression, shedding light on new treatment approaches.",
-        "image": "src/components/icons/depression_1.jpg",
+        "image": "../components/icons/depression_1.jpg",
         "link": "#",
         "date": "2023-09-15",
         "rating": 4.7
@@ -13,7 +13,7 @@
         "id": 2,
         "title": "Cognitive Behavioral Therapy: A Proven Method for Treating Depression",
         "summary": "CBT remains one of the most effective non-pharmacological treatments for managing depression, offering patients tools for long-term mental health management.",
-        "image": "src/components/icons/depression_2.jpg",
+        "image": "../components/icons/depression_2.jpg",
         "link": "#",
         "date": "2023-09-10",
         "rating": 4.9
@@ -22,7 +22,7 @@
         "id": 3,
         "title": "The Global Rise of Depression in the Wake of the Pandemic",
         "summary": "The COVID-19 pandemic has contributed to a global surge in depression cases, highlighting the need for better mental health services and resources.",
-        "image": "src/components/icons/depression_3.jpg",
+        "image": "../components/icons/depression_3.jpg",
         "link": "#",
         "date": "2023-09-05",
         "rating": 4.8
