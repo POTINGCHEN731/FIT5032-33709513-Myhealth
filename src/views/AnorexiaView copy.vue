@@ -52,7 +52,7 @@ const insomniaInfo = {
   title: ' What is Insomnia',
   description:
     'Insomnia is a common sleep disorder characterized by difficulty falling asleep, staying asleep, or both. It can lead to daytime fatigue, mood disturbances, and decreased performance in work or daily activities. Chronic insomnia can have significant impacts on overall health and quality of life.',
-  image: 'src/components/icons/Insomia.jpg'
+  image: '/components/Insomia.jpg'
 }
 </script>
 

@@ -12,7 +12,7 @@ const insomniaInfo = {
   title: ' What is Anorexia',
   description:
     'Anorexia nervosa is a serious eating disorder characterized by an intense fear of gaining weight, leading to extreme food restriction, severe weight loss, and a distorted body image. People with anorexia often see themselves as overweight even when they are underweight. It can have severe health consequences, including malnutrition, bone density loss, heart problems, and organ failure. Anorexia affects both physical and mental health, and it often coexists with conditions like anxiety and depression. Early intervention and treatment, such as therapy and medical support, are crucial for recovery.',
-  image: 'src/components/icons/Anorexia_1.jpg'
+  image: '/components/Anorexia_1.jpg'
 }
 onMounted(async () => {
   for (let i = 0; i < newsItems.value.length; i++) {

@@ -12,7 +12,7 @@ const insomniaInfo = {
   title: ' What is Depression',
   description:
     'Depression is a mood disorder that causes persistent feelings of sadness, hopelessness, and loss of interest. It is a common mental health condition that can affect how you feel, think, and handle daily activities. Depression can lead to a variety of emotional and physical problems and can decrease a person’s ability to function at work and at home. Treatment for depression may involve therapy, medication, and lifestyle changes. Early diagnosis and intervention are essential for managing symptoms and improving quality of life.',
-  image: 'src/components/icons/depression_1.jpg'
+  image: '/components/depression_1.jpg'
 }
 onMounted(async () => {
   for (let i = 0; i < newsItems.value.length; i++) {

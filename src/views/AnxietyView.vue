@@ -12,7 +12,7 @@ const insomniaInfo = {
   title: ' What is Anxiety',
   description:
     'Anxiety is a normal and often healthy emotion. However, when a person regularly feels disproportionate levels of anxiety, it might become a medical disorder. Anxiety disorders form a category of mental health diagnoses that lead to excessive nervousness, fear, apprehension, and worry. These disorders alter how a person processes emotions and behave, also causing physical symptoms. Mild anxiety might be vague and unsettling, while severe anxiety may seriously affect day-to-day living.',
-    image: 'src/components/icons/anxiety_3.jpg'
+    image: '/components/anxiety_3.jpg'
 }
 onMounted(async () => {
   for (let i = 0; i < newsItems.value.length; i++) {

@@ -12,7 +12,7 @@ const insomniaInfo = {
   title: ' What is Addiction',
   description:
     'Addiction is a complex condition characterized by compulsive drug use or engagement in harmful behaviors despite negative consequences. It is a chronic brain disease that affects the brain’s reward, motivation, and memory functions. Addiction can lead to physical and psychological dependence, withdrawal symptoms, and a loss of control over substance use. Treatment for addiction often involves a combination of therapy, medication, and lifestyle changes. Early intervention and support are essential for recovery.',
-  image: 'src/components/icons/Addiction_3.jpg'
+  image: '/components/Addiction_3.jpg'
 }
 onMounted(async () => {
   for (let i = 0; i < newsItems.value.length; i++) {
