@@ -12,7 +12,7 @@ const insomniaInfo = {
   title: ' What is OCD',
   description:
     'Obsessive-compulsive disorder (OCD) is a mental health condition characterized by intrusive, unwanted thoughts (obsessions) and repetitive behaviors or mental acts (compulsions). People with OCD may feel compelled to perform rituals or routines to alleviate anxiety or prevent perceived harm. These behaviors can interfere with daily life and cause significant distress. OCD is a chronic condition that can be managed with therapy, medication, and lifestyle changes. Early diagnosis and treatment are essential for improving quality of life and reducing symptoms.',
-  image: 'src/components/icons/OCD.jpg'
+  image: '/components/OCD.jpg'
 }
 onMounted(async () => {
   for (let i = 0; i < newsItems.value.length; i++) {
