@@ -13,7 +13,7 @@
           <div class="col-md-4 mb-4">
             <div class="card h-100">
               <router-link to="/InsomiaView" class="nav-link" active-class="active" aria-current="page">
-                <img src="../components/icons/insomia.jpg" class="card-img-top" alt="isomia">
+                <img src="../components/icons/Insomia.jpg" class="card-img-top" alt="isomia">
               <div class="card-body">
                 <h5 class="card-title">Insomia</h5>
               </div>
