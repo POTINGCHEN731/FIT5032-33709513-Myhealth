@@ -4,7 +4,7 @@
         "id": 1,
         "title": "New Findings on Addiction Recovery Techniques",
         "summary": "Researchers have identified new techniques for overcoming addiction, emphasizing the role of social support and behavioral therapy in long-term recovery.",
-        "image": "public/hate.jpg",
+        "image": "/components/hate.jpg",
         "link": "#",
         "date": "2023-08-10",
         "rating": 4.6
@@ -13,7 +13,7 @@
         "id": 2,
         "title": "The Impact of Addiction on Mental Health",
         "summary": "Addiction not only affects physical health but also leads to serious mental health challenges like depression and anxiety. Early intervention is crucial.",
-        "image": "public/Addiction_2.jpg",
+        "image": "/components/Addiction_2.jpg",
         "link": "#",
         "date": "2023-08-05",
         "rating": 4.8
@@ -22,7 +22,7 @@
         "id": 3,
         "title": "Substance Abuse and Brain Chemistry",
         "summary": "New studies explore how long-term substance abuse alters brain chemistry, contributing to dependency and difficulty in quitting.",
-        "image": "public/Addiction_3.jpg",
+        "image": "/components/Addiction_3.jpg",
         "link": "#",
         "date": "2023-08-01",
         "rating": 4.7
