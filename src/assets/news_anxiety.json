@@ -4,7 +4,7 @@
         "id": 1,
         "title": "Breakthrough in Anxiety Treatment with Mindfulness Therapy",
         "summary": "A recent study highlights how mindfulness-based therapy has become an effective treatment for reducing anxiety symptoms and improving mental well-being.",
-        "image": "src/components/icons/anxiety_1.jpg",
+        "image": "../components/icons/anxiety_1.jpg",
         "link": "#",
         "date": "2023-07-20",
         "rating": 4.8
@@ -13,7 +13,7 @@
         "id": 2,
         "title": "The Effects of Social Media on Anxiety in Young Adults",
         "summary": "Research shows a growing connection between social media use and rising anxiety levels in young adults, prompting calls for more digital wellness initiatives.",
-        "image": "src/components/icons/anxiety_2.jpg",
+        "image": "../components/icons/anxiety_2.jpg",
         "link": "#",
         "date": "2023-07-15",
         "rating": 4.7
@@ -22,7 +22,7 @@
         "id": 3,
         "title": "Managing Anxiety: A Look at Cognitive Behavioral Therapy",
         "summary": "CBT remains one of the most effective approaches for treating anxiety disorders, offering tools for coping and long-term management.",
-        "image": "src/components/icons/anxiety_3.jpg",
+        "image": "../components/icons/anxiety_3.jpg",
         "link": "#",
         "date": "2023-07-10",
         "rating": 4.9
