@@ -11,6 +11,7 @@ const signIn = () => {
 
 const signOut = () => {
   localStorage.removeItem('isAuthenticated')
+  localStorage.removeItem('userInfo')
   isAuthenticated.value = null
   router.push('/Login')
 }
