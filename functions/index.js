@@ -11,7 +11,6 @@ const {onRequest} = require("firebase-functions/v2/https");
 const sgMail = require("@sendgrid/mail");
 const admin = require("firebase-admin");
 const cors = require("cors")({origin: true});
-const functions = require("firebase-functions");
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -25,7 +24,7 @@ exports.sendEmail = onRequest(async (req, res) => {
       return res.status(405).send("Method Not Allowed");
     }
     const msg = {
-      to: "terence07312000@gmail.com",
+      to: "",
       from: "myhealth0731@gmail.com",
       subject: "Sending with SendGrid is Fun",
       text: "and easy to do anywhere, even with Node.js",
@@ -41,28 +40,7 @@ exports.sendEmail = onRequest(async (req, res) => {
     }
   });
 });
-exports.sendEmailOnDelete = functions.firestore
-    .document("Appointment/{docId}")
-    .onDelete(async (snap, context) => {
-      const deletedValue = snap.data();
 
-      const msg = {
-        to: "terence07312000@gmail.com",
-        from: "medlingobookings@gmail.com",
-        subject: "Firestore Document Deleted",
-        text: `A document was deleted from Firestore. 
-        Details: ${JSON.stringify(deletedValue)}`,
-        html: `<strong>A document was deleted from Firestore.</strong><br/>
-        Details: ${JSON.stringify(deletedValue)}`,
-      };
-
-      try {
-        await sgMail.send(msg);
-        console.log("Email sent successfully");
-      } catch (error) {
-        console.error("Error sending email:", error);
-      }
-    });
 
 exports.AverageRating = onRequest(async (req, res) => {
   cors(req, res, async () => {
@@ -162,4 +140,3 @@ exports.deleteAppointment = onRequest(async (req, res) => {
     }
   });
 });
-

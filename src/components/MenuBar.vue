@@ -32,7 +32,7 @@ const signOut = () => {
       </a>
       <a v-if="isAuthenticated==='Admin'" class="p-menuitem-link sign-in-item button-spacing" @click="router.push('/Appointment')">
         <span class="p-menuitem-icon pi pi-fw pi-user"></span>
-        <span class="p-menuitem-text"> Admin</span>
+        <span class="p-menuitem-text"> Admin Dashboard</span>
       </a>
       <a v-if="isAuthenticated && isAuthenticated!=='Admin' " class="p-menuitem-link sign-in-item button-spacing" @click="router.push('/UserAppointment')">
         <span class="p-menuitem-icon pi pi-fw pi-user"></span>
