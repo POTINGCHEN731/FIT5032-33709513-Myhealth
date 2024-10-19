@@ -11,6 +11,8 @@ const {onRequest} = require("firebase-functions/v2/https");
 const sgMail = require("@sendgrid/mail");
 const admin = require("firebase-admin");
 const cors = require("cors")({origin: true});
+const PDFDocument = require("pdfkit");
+const {Buffer} = require("buffer");
 
 admin.initializeApp();
 const db = admin.firestore();
@@ -23,24 +25,82 @@ exports.sendEmail = onRequest(async (req, res) => {
     if (req.method !== "POST") {
       return res.status(405).send("Method Not Allowed");
     }
-    const msg = {
-      to: "",
-      from: "myhealth0731@gmail.com",
-      subject: "Sending with SendGrid is Fun",
-      text: "and easy to do anywhere, even with Node.js",
-      html: "<strong>and easy to do anywhere, even with Node.js</strong>",
-    };
 
-    try {
-      await sgMail.send(msg);
-      res.status(200).send("Email sent successfully!");
-    } catch (error) {
-      console.error(error);
-      res.status(500).send("Failed to send email");
+    const {toEmail, name, date, consultants} = req.body;
+    if (!toEmail || !name || !date || !consultants) {
+      return res.status(400).send("Recipient email, name, date, " +
+        "and consultant information are required");
     }
+
+    const emailText = `
+      Hello,
+
+      This is a reminder that your appointment is built.
+
+      Here are the information for your booking:
+      Name: ${name}
+      Date: ${date}
+      Doctor: ${consultants}
+
+      Please attend the consult on time. We are glad to see you soon!
+
+      Best regards,
+      Myhealth
+    `;
+
+    const emailHtml = `
+      <p>Hello,</p>
+      <p>This is a reminder that your appointment is built.</p>
+      <p>Here are the information for your booking:</p>
+      <ul>
+        <li><strong>Name:</strong> ${name}</li>
+        <li><strong>Date:</strong> ${date}</li>
+        <li><strong>Doctor:</strong> ${consultants}</li>
+      </ul>
+      <p>Please attend the consult on time. We are glad to see you soon!</p>
+      <p>Best regards,<br/>Myhealth</p>
+    `;
+
+    const doc = new PDFDocument();
+    const buffers = [];
+    doc.on("data", buffers.push.bind(buffers));
+    doc.on("end", async () => {
+      const pdfData = Buffer.concat(buffers);
+
+      const msg = {
+        to: toEmail,
+        from: "myhealth0731@gmail.com",
+        subject: "Thanks for booking an appointment!",
+        text: emailText,
+        html: emailHtml,
+        attachments: [
+          {
+            content: pdfData.toString("base64"),
+            filename: "appointment_details.pdf",
+            type: "application/pdf",
+            disposition: "attachment",
+          },
+        ],
+      };
+
+      try {
+        await sgMail.send(msg);
+        res.status(200).send("Email with PDF sent successfully!");
+      } catch (error) {
+        console.error(error);
+        res.status(500).send("Failed to send email");
+      }
+    });
+
+    doc.fontSize(16).text("Appointment Details", {align: "center"});
+    doc.moveDown();
+    doc.fontSize(12).text(`Name: ${name}`);
+    doc.text(`Date: ${date}`);
+    doc.text(`Doctor: ${consultants}`);
+    doc.text("Please attend the consult on time.");
+    doc.end();
   });
 });
-
 
 exports.AverageRating = onRequest(async (req, res) => {
   cors(req, res, async () => {

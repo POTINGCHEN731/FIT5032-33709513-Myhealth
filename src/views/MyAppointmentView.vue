@@ -11,7 +11,6 @@ const confirmDelete = async (appointmentId) => {
   if (isConfirmed) {
     await deleteAppointment(appointmentId);
     alert("Appointment deleted successfully!");
-    sendEmail();
   }
 };
 const deleteAppointment = async (appointmentId) => {
@@ -42,6 +41,14 @@ onMounted(async () => {
     console.error("Error fetching appointments:", error);
   }
 });
+const sendReminder = (Email, name, date, consultants) => {
+  sendEmail({
+    toEmail: Email,
+    name: name,
+    date: date,
+    consultants: consultants,
+  });
+};
 
 </script>
 
@@ -66,6 +73,7 @@ onMounted(async () => {
     <strong>Email:</strong> {{ appointment.email }}
   </div>
   <button class="signup-btn" @click="confirmDelete(appointment.id)">Delete</button>
+  <button class="signup-btn" @click="sendReminder(appointment.email, appointment.name, appointment.appointmentDate, appointment.appointmentDoctor)">Send Reminder</button>
 </li>
           </ul>
         </div>
@@ -139,6 +147,7 @@ select {
   cursor: pointer;
   font-size: 16px;
   border-radius: 5px;
+  margin-right: 10px;
 }
 
 
