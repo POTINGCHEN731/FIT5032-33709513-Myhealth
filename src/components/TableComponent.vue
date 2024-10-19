@@ -48,9 +48,28 @@ const sendReminder = (Email, name, date, consultants) => {
   alert("Reminder sent successfully!");
 };
 
-const sendEmailsToSelected = () => {
-  console.log(selectedData.value)
-}
+const sendEmailsToSelected = async () => {
+  if (!selectedData.value.length) {
+    alert("No recipients selected.");
+    return;
+  }
+
+  const recipients = selectedData.value.map(appointment => ({
+    toEmail: appointment.email,
+    name: appointment.name,
+    date: appointment.appointmentDate,
+    consultants: appointment.appointmentDoctor,
+  }));
+
+  try {
+    await sendMultipleEmails(recipients);
+    alert('Emails sent to selected users successfully!');
+  } catch (error) {
+    console.error('Error sending emails:', error);
+    alert('Failed to send some emails.');
+  }
+};
+
 
 
 
