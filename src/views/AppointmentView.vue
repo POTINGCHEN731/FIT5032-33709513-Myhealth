@@ -1,8 +1,10 @@
 <script setup>
 import { ref } from 'vue';
 import Table from '../components/TableComponent.vue';
+import Chart from '../components/ChartComponent.vue';
 import Menubar from 'primevue/menubar' 
 const activeSection = ref('table')
+
 
 const items = [
     {
