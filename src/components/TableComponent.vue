@@ -7,7 +7,7 @@ import Button from 'primevue/button'
 import InputText from 'primevue/inputtext'
 import axios from 'axios'
 import { saveAs } from 'file-saver'
-import { sendEmail } from '../components/SendEmail'
+import { sendEmail, sendMultipleEmails } from '../components/SendEmail'
 
 const data = ref([])
 const selectedData = ref([])
@@ -44,8 +44,15 @@ const sendReminder = (Email, name, date, consultants) => {
     date: date,
     consultants: consultants,
   });
+  console.log(selectedData.value)
   alert("Reminder sent successfully!");
 };
+
+const sendEmailsToSelected = () => {
+  console.log(selectedData.value)
+}
+
+
 
 const filteredData = computed(() => {
   const nameFilter = filters.value.name.value?.toLowerCase() || ''
@@ -86,6 +93,7 @@ function exportCSV() {
 
   saveAs(blob, 'appointment_data.csv')
 }
+
 </script>
 
 <template>
@@ -211,7 +219,7 @@ function exportCSV() {
           <Button
             label="Send Email to Selected"
             class="ml-2 p-button-warning signup-btn"
-            @click="sendEmailToSelected"
+            @click="sendEmailsToSelected"
           />
         </div>
       </div>

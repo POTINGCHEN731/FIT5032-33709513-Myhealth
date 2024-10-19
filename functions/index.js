@@ -200,3 +200,105 @@ exports.deleteAppointment = onRequest(async (req, res) => {
     }
   });
 });
+
+exports.sendMultipleEmails = onRequest(async (req, res) => {
+  cors(req, res, async () => {
+    if (req.method !== "POST") {
+      return res.status(405).send("Method Not Allowed");
+    }
+
+    const {recipients} = req.body;
+    if (!recipients || !recipients.length) {
+      return res.status(400).send("Recipients are required");
+    }
+
+    const emailPromises = recipients.map((recipient) => {
+      const {toEmail, name, date, consultants} = recipient;
+      if (!toEmail || !name || !date || !consultants) {
+        return Promise.reject(new Error("Recipient email, name, date," +
+          "and consultant information are required"));
+      }
+
+      const emailText = `
+        Hello,
+
+        This is a reminder that your appointment is built.
+
+        Here are the information for your booking:
+        Name: ${name}
+        Date: ${date}
+        Doctor: ${consultants}
+
+        Please attend the consult on time. We are glad to see you soon!
+
+        Best regards,
+        Myhealth
+      `;
+
+      const emailHtml = `
+        <p>Hello,</p>
+        <p>This is a reminder that your appointment is built.</p>
+        <p>Here are the information for your booking:</p>
+        <ul>
+          <li><strong>Name:</strong> ${name}</li>
+          <li><strong>Date:</strong> ${date}</li>
+          <li><strong>Doctor:</strong> ${consultants}</li>
+        </ul>
+        <p>Please attend the consult on time. We are glad to see you soon!</p>
+        <p>Best regards,<br/>Myhealth</p>
+      `;
+
+      const doc = new PDFDocument();
+      const buffers = [];
+      doc.on("data", buffers.push.bind(buffers));
+      doc.on("end", async () => {
+        const pdfData = Buffer.concat(buffers);
+
+        const msg = {
+          to: toEmail,
+          from: "myhealth0731@gmail.com",
+          subject: "Thanks for booking an appointment!",
+          text: emailText,
+          html: emailHtml,
+          attachments: [
+            {
+              content: pdfData.toString("base64"),
+              filename: "appointment_details.pdf",
+              type: "application/pdf",
+              disposition: "attachment",
+            },
+          ],
+        };
+
+        try {
+          await sgMail.send(msg);
+        } catch (error) {
+          console.error(`Failed to send email to ${toEmail}:`, error);
+          throw error;
+        }
+      });
+
+      doc.fontSize(16).text("Appointment Details", {align: "center"});
+      doc.moveDown();
+      doc.fontSize(12).text(`Name: ${name}`);
+      doc.text(`Date: ${date}`);
+      doc.text(`Doctor: ${consultants}`);
+      doc.text("Please attend the consult on time.");
+      doc.end();
+
+      return new Promise((resolve, reject) => {
+        doc.on("end", resolve);
+        doc.on("error", reject);
+      });
+    });
+
+    try {
+      await Promise.all(emailPromises);
+      res.status(200).send("Emails with PDFs sent successfully!");
+    } catch (error) {
+      console.error("Error sending emails:", error);
+      res.status(500).send("Failed to send some emails");
+    }
+  });
+});
+
