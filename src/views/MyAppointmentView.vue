@@ -48,6 +48,7 @@ const sendReminder = (Email, name, date, consultants) => {
     date: date,
     consultants: consultants,
   });
+  alert("Reminder sent successfully!");
 };
 
 </script>
